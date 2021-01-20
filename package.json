@@ -1,15 +1,15 @@
 {
-  "name": "turbolinks-animate",
+  "name": "turbo-animate",
   "version": "3.2.1",
-  "description": "Rich & adaptive animations for apps using Turbolinks™",
+  "description": "Rich & adaptive animations for apps using Turbo™ (previous named Turbolinks)",
   "main": "src/index.js",
   "homepage": "https://jonhue.me/repos/turbolinks-animate",
   "bugs": {
-    "url": "https://github.com/jonhue/turbolinks-animate/issues",
-    "email": "me@jonhue.me"
+    "url": "https://github.com/retsef/turbo-animate/issues",
+    "email": "roberto.scinocca@gmail.com"
   },
-  "repository": "https://github.com/jonhue/turbolinks-animate",
-  "author": "Jonas Hübotter <me@jonhue.me>",
+  "repository": "https://github.com/retsef/turbo-animate",
+  "author": "Roberto Scinocca <roberto.scinocca@gmail.com>",
   "license": "MIT",
   "engines": {
     "node": "10 || >=12"

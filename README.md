@@ -1,12 +1,12 @@
-# Turbolinks Animate
+# Turbo Animate
 
-![NPM Version](https://img.shields.io/npm/v/turbolinks-animate.svg) ![Travis](https://travis-ci.org/jonhue/turbolinks-animate.svg?branch=master)
+![NPM Version](https://img.shields.io/npm/v/turbo-animate.svg) ![Travis](https://travis-ci.org/retsef/turbo-animate.svg?branch=master)
 
-A dead simple & powerful way of adding rich & adaptive animations to your app which is already using Turbolinks™.
+A dead simple & powerful way of adding rich & adaptive animations to your app which is already using Turbo™.
 
 #### Extensions
 
-* [Ruby on Rails](https://github.com/jonhue/turbolinks-animate-rails)
+* [Ruby on Rails](https://github.com/retsef/turbo-animate-rails)
 
 ---
 
@@ -35,19 +35,19 @@ A dead simple & powerful way of adding rich & adaptive animations to your app wh
 
 ```javascript
 // Shows the initialized element
-TurbolinksAnimate.appear();
+TurboAnimate.appear();
 
 // Hides the initialized element
-TurbolinksAnimate.disappear();
+TurboAnimate.disappear();
 ```
 
 ### Options
 
-There are a number of ways in which you can adopt Turbolinks Animate to your needs:
+There are a number of ways in which you can adopt Turbo Animate to your needs:
 
 #### Animations:
 
-The vital part is choosing an animation to play. Turbolinks Animate utilizes Animate.css to power them. These are the animations which are currently accessible:
+The vital part is choosing an animation to play. Turbo Animate utilizes Animate.css to power them. These are the animations which are currently accessible:
 
 <details>
   <summary>Full list of animations</summary>
@@ -119,10 +119,10 @@ The vital part is choosing an animation to play. Turbolinks Animate utilizes Ani
   </ul>
 </details>
 
-There are three ways in which you can specify the animation you want to use. To choose a globally used animation pass an option when initializing Turbolinks Animate:
+There are three ways in which you can specify the animation you want to use. To choose a globally used animation pass an option when initializing Turbo Animate:
 
 ```javascript
-TurbolinksAnimate.init({animation: 'fadeinright'});
+TurboAnimate.init({animation: 'fadeinright'});
 ```
 
 **Note:** The option falls back to `fadein`.
@@ -146,33 +146,33 @@ For alternate approaches take a look at [inline animations](#inline-animations) 
 #### Example:
 
 ```javascript
-TurbolinksAnimate.init({animation: 'fadeinright', duration: '1s', delay: 1000});
+TurboAnimate.init({animation: 'fadeinright', duration: '1s', delay: 1000});
 ```
 
 ### Inline animations
 
-With Turbolinks Animate you are able to set animations based on the links, who got clicked:
+With Turbo Animate you are able to set animations based on the links, who got clicked:
 
 ```html
-<a href="" data-turbolinks-animate-animation="fadeout" data-turbolinks-animate-duration="0.3s" data-turbolinks-animate-delay="250">I am a link!</a>
+<a href="" data-turbo-animate-animation="fadeout" data-turbo-animate-duration="0.3s" data-turbo-animate-delay="250">I am a link!</a>
 ```
 
 #### Attributes:
 
-* `data-turbolinks-animate-animation` Animation to be applied when disappearing after a hyperlink got clicked. Accepts a string. Set it to `'false'` to disable Turbolinks Animate on this specific link.
+* `data-turbo-animate-animation` Animation to be applied when disappearing after a hyperlink got clicked. Accepts a string. Set it to `'false'` to disable Turbo Animate on this specific link.
 
-* `data-turbolinks-animate-appear` Animation to be applied when appearing on the next view after a hyperlink got clicked. Accepts a string.
+* `data-turbo-animate-appear` Animation to be applied when appearing on the next view after a hyperlink got clicked. Accepts a string.
 
-* `data-turbolinks-animate-duration` CSS value for `animation-duration`. Accepts a string.
+* `data-turbo-animate-duration` CSS value for `animation-duration`. Accepts a string.
 
-* `data-turbolinks-animate-delay` Milliseconds after which animation starts. Accepts an integer or `false`.
+* `data-turbo-animate-delay` Milliseconds after which animation starts. Accepts an integer or `false`.
 
 ### Per Device-Type
 
 In addition you can specify animations specifically for certain screen sizes, just pass a hash:
 
 ```javascript
-TurbolinksAnimate.init({animation: {'mobile': 'fadeinup', 'tablet': 'fadeindown', 'desktop': 'fadein'}});
+TurboAnimate.init({animation: {'mobile': 'fadeinup', 'tablet': 'fadeindown', 'desktop': 'fadein'}});
 ```
 
 **Note:** You can customize the breakpoints through the [options](#options).
@@ -181,30 +181,30 @@ TurbolinksAnimate.init({animation: {'mobile': 'fadeinup', 'tablet': 'fadeindown'
 
 A lot of times with frameworks like Ruby on Rails you want to be able to specify animations from within your controllers and views without nasty javascript nesting.
 
-With Turbolinks Animate you can just add a data attribute to your initialized element, naming the animation you want to use. It will override the global default:
+With Turbo Animate you can just add a data attribute to your initialized element, naming the animation you want to use. It will override the global default:
 
 ```html
-<body data-turbolinks-animate-animation="fadeinup"></body>
+<body data-turbo-animate-animation="fadeinup"></body>
 ```
 
 ### Persistent elements
 
-A lot of times you want to persist certain elements throughout requests, for example a navigation bar or other parts of your layout that is being shared between views. Turbolinks Animate makes it dead simple to declare persistent elements in your view:
+A lot of times you want to persist certain elements throughout requests, for example a navigation bar or other parts of your layout that is being shared between views. Turbo Animate makes it dead simple to declare persistent elements in your view:
 
 ```html
-<body data-turbolinks-animate-animation="fadein">
-  <h1 data-turbolinks-animate-persist="true">My app</h1>
+<body data-turbo-animate-animation="fadein">
+  <h1 data-turbo-animate-persist="true">My app</h1>
   <p>This is specific to my view!</p>
 </body>
 ```
 
 **Note:** Elements don't actually persist, the get replaced by the fetched page just like any other element. But because no animation gets applied, they look just as if the persist (as long as the newly fetched page includes the exact same element in the same position).
 
-Setting `data-turbolinks-animate-persist` to `true` will result in the entire element (including its children) being excluded from the applied animations. If you want to apply the animations to children of the persistent element, but still keep it untouched, append `-itself` to the data attribute. This is especially useful, when you apply a background color to your element, which remains the same, but changes it contents:
+Setting `data-turbo-animate-persist` to `true` will result in the entire element (including its children) being excluded from the applied animations. If you want to apply the animations to children of the persistent element, but still keep it untouched, append `-itself` to the data attribute. This is especially useful, when you apply a background color to your element, which remains the same, but changes it contents:
 
 ```html
-<body data-turbolinks-animate-animation="fadein">
-  <nav data-turbolinks-animate-persist-itself="true" style="background: black;">
+<body data-turbo-animate-animation="fadein">
+  <nav data-turbo-animate-persist-itself="true" style="background: black;">
     <h1 style="color: white;">View specific title</h1>
   </nav>
   <p>This is specific to my view!</p>
@@ -216,11 +216,11 @@ Setting `data-turbolinks-animate-persist` to `true` will result in the entire el
 Often your permanent elements depend on the hyperlink clicked. Just specify the animation type on the hyperlink tag, and replace `true` with the chosen type on the persistent element:
 
 ```html
-<body data-turbolinks-animate-animation="fadein">
-  <nav data-turbolinks-animate-persist-itself="nav" style="background: black;">
+<body data-turbo-animate-animation="fadein">
+  <nav data-turbo-animate-persist-itself="nav" style="background: black;">
     <h1 style="color: white;">View specific title</h1>
   </nav>
-  <a href="/do" data-turbolinks-animate-type="nav">Persist navigation!</a>
+  <a href="/do" data-turbo-animate-type="nav">Persist navigation!</a>
   <a href="/doo">Don't persist navigation!</a>
 </body>
 ```
@@ -230,7 +230,7 @@ Often your permanent elements depend on the hyperlink clicked. Just specify the 
 In a lot of cases it can be useful to apply custom CSS transitions to specific elements when the page changes. This works especially well with background colors of persisted elements, but can be used for any CSS property on any element. Multiple properties can be transitioned using using comma separated values.
 
 ```html
-<header data-turbolinks-animate-persist-itself="true" data-turbolinks-animate-transition="background-color,opacity">
+<header data-turbo-animate-persist-itself="true" data-turbo-animate-transition="background-color,opacity">
   <!-- ... -->
 </header>
 ```
@@ -249,17 +249,17 @@ header {
 }
 ```
 
-When you have a third page, which doesn't contain a `header` element, the page transition performs normally as this method only applies when Turbolinks Animate can find a matching element on the new page.
+When you have a third page, which doesn't contain a `header` element, the page transition performs normally as this method only applies when Turbo Animate can find a matching element on the new page.
 
 **Important:** Unless you only use this data attribute for elements that can be distinguished by their HTML tag, you have to declare an id.
 
 ### Events
 
-Turbolinks Animate emits events that allow you to track the animation lifecycle. Turbolinks Animate fires events on the `document` object.
+Turbo Animate emits events that allow you to track the animation lifecycle. Turbo Animate fires events on the `document` object.
 
-* `turbolinks:animation-start` fires when an animation starts. The main Turbolinks Animate element can be accessed with `event.data.element`. Access the animation with `event.data.animation`. Access whether content appears or disappears with `event.data.disappearing`.
+* `turbo:animation-start` fires when an animation starts. The main Turbo Animate element can be accessed with `event.data.element`. Access the animation with `event.data.animation`. Access whether content appears or disappears with `event.data.disappearing`.
 
-* `turbolinks:animation-end` fires when an animation ends. The main Turbolinks Animate element can be accessed with `event.data.element`. Access whether content appeared or disappeared with `event.data.disappearing`.
+* `turbo:animation-end` fires when an animation ends. The main Turbo Animate element can be accessed with `event.data.element`. Access whether content appeared or disappeared with `event.data.disappearing`.
 
 ---
 
@@ -290,18 +290,18 @@ Turbolinks Animate emits events that allow you to track the animation lifecycle.
 
 ## To Do
 
-We use [GitHub projects](https://github.com/jonhue/turbolinks-animate/projects/1) to coordinate the work on this project.
+We use [GitHub projects](https://github.com/retsef/turbo-animate/projects/1) to coordinate the work on this project.
 
-To propose your ideas, initiate the discussion by adding a [new issue](https://github.com/jonhue/turbolinks-animate/issues/new).
+To propose your ideas, initiate the discussion by adding a [new issue](https://github.com/retsef/turbo-animate/issues/new).
 
 ---
 
 ## Contributing
 
-We hope that you will consider contributing to Turbolinks Animate. Please read this short overview for some information about how to get started:
+We hope that you will consider contributing to Turbo Animate. Please read this short overview for some information about how to get started:
 
 [Learn more about contributing to this repository](CONTRIBUTING.md), [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ### Semantic Versioning
 
-Turbolinks Animate follows Semantic Versioning 2.0 as defined at http://semver.org.
+Turbo Animate follows Semantic Versioning 2.0 as defined at http://semver.org.

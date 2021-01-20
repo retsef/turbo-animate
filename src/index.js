@@ -1,4 +1,4 @@
-window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
+window.TurboAnimate = window.TurboAnimate || new function() {
   this.options = {};
   this.inline = false;
   this.element = null;
@@ -91,55 +91,55 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
     };
     options = extend({}, defaults, options);
 
-    TurbolinksAnimate.element = options.element;
-    TurbolinksAnimate.setOptions(options);
+    TurboAnimate.element = options.element;
+    TurboAnimate.setOptions(options);
     if ('scrollRestoration' in history)
       history.scrollRestoration = 'manual';
 
-    if (TurbolinksAnimate.initialized == false && options.customListeners == false) {
-      document.addEventListener('turbolinks:request-start', () => {
-        TurbolinksAnimate.disappear();
+    if (TurboAnimate.initialized == false && options.customListeners == false) {
+      document.addEventListener('turbo:request-start', () => {
+        TurboAnimate.disappear();
       });
       window.addEventListener('popstate', () => {
-        TurbolinksAnimate.disappear();
+        TurboAnimate.disappear();
       });
       let ignoreBeforeunload = false;
       document.querySelectorAll('a[href^=mailto]').forEach((element) => element.addEventListener('click', () => ignoreBeforeunload = true));
       window.addEventListener('beforeunload', () => {
         if (!ignoreBeforeunload)
-          TurbolinksAnimate.disappear();
+          TurboAnimate.disappear();
         ignoreBeforeunload = false;
       });
-      document.addEventListener('turbolinks:before-render', (event) => {
-        TurbolinksAnimate.prepareTransition(event.data.newBody);
+      document.addEventListener('turbo:before-render', (event) => {
+        TurboAnimate.prepareTransition(event.data.newBody);
       });
-      document.addEventListener('turbolinks:render', () => {
-        TurbolinksAnimate.transition();
+      document.addEventListener('turbo:render', () => {
+        TurboAnimate.transition();
       });
     }
 
     document.querySelectorAll('a, button').forEach((element) => {
       element.addEventListener('click', () => {
-        if (typeof element.dataset.turbolinksAnimateAnimation !== 'undefined')
-          TurbolinksAnimate.inline = true;
-        TurbolinksAnimate.options.animation = element.dataset.turbolinksAnimateAnimation || options.animation;
-        TurbolinksAnimate.options.appear = element.dataset.turbolinksAnimateAppear;
-        TurbolinksAnimate.options.duration = element.dataset.turbolinksAnimateDuration || options.duration;
-        TurbolinksAnimate.options.delay = element.dataset.turbolinksAnimateDelay || options.delay;
-        TurbolinksAnimate.options.type = element.dataset.turbolinksAnimateType;
+        if (typeof element.dataset.turboAnimateAnimation !== 'undefined')
+          TurboAnimate.inline = true;
+        TurboAnimate.options.animation = element.dataset.turboAnimateAnimation || options.animation;
+        TurboAnimate.options.appear = element.dataset.turboAnimateAppear;
+        TurboAnimate.options.duration = element.dataset.turboAnimateDuration || options.duration;
+        TurboAnimate.options.delay = element.dataset.turboAnimateDelay || options.delay;
+        TurboAnimate.options.type = element.dataset.turboAnimateType;
       });
     });
 
-    TurbolinksAnimate.initialized = true;
+    TurboAnimate.initialized = true;
     if (options.customListeners == false)
-      TurbolinksAnimate.appear();
+      TurboAnimate.appear();
   };
 
   this.setOptions = (options) => {
-    let previousType = TurbolinksAnimate.options.type,
-      appear = TurbolinksAnimate.options.appear;
+    let previousType = TurboAnimate.options.type,
+      appear = TurboAnimate.options.appear;
 
-    TurbolinksAnimate.options = {
+    TurboAnimate.options = {
       animation: options.animation,
       duration: options.duration,
       delay: options.delay,
@@ -151,9 +151,9 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
   };
 
   this.prepareTransition = (newBody) => {
-    document.querySelectorAll('[data-turbolinks-animate-transition]').forEach((element) => {
-      let properties = element.dataset.turbolinksAnimateTransition.split(','),
-        matchingElements = newBody.querySelectorAll(element.tagName + '[data-turbolinks-animate-transition]'),
+    document.querySelectorAll('[data-turbo-animate-transition]').forEach((element) => {
+      let properties = element.dataset.turboAnimateTransition.split(','),
+        matchingElements = newBody.querySelectorAll(element.tagName + '[data-turbo-animate-transition]'),
         newElement = null;
 
       if (matchingElements.length == 1) {
@@ -171,9 +171,9 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
   };
   
   this.transition = () => {
-    document.querySelectorAll('[data-turbolinks-animate-transition]').forEach((element) => {
+    document.querySelectorAll('[data-turbo-animate-transition]').forEach((element) => {
       setTimeout(() => {
-        let properties = element.dataset.turbolinksAnimateTransition.split(',');
+        let properties = element.dataset.turboAnimateTransition.split(',');
         properties.forEach((property) => {
           element.style[cssPropertyToCamelCase(property)] = null;
         });
@@ -182,103 +182,103 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
   };
 
   this.appear = () => {
-    TurbolinksAnimate.disappearing = false;
-    TurbolinksAnimate.toggle();
+    TurboAnimate.disappearing = false;
+    TurboAnimate.toggle();
   };
   this.disappear = () => {
-    TurbolinksAnimate.disappearing = true;
-    TurbolinksAnimate.toggle();
+    TurboAnimate.disappearing = true;
+    TurboAnimate.toggle();
   };
   this.toggle = () => {
-    if (TurbolinksAnimate.options.animation != 'false') {
-      TurbolinksAnimate.resetClasses();
-      TurbolinksAnimate.getElements();
-      TurbolinksAnimate.useOptions();
-      Turbolinks.clearCache();
-      TurbolinksAnimate.animate();
-      TurbolinksAnimate.reset();
+    if (TurboAnimate.options.animation != 'false') {
+      TurboAnimate.resetClasses();
+      TurboAnimate.getElements();
+      TurboAnimate.useOptions();
+      Turbo.clearCache();
+      TurboAnimate.animate();
+      TurboAnimate.reset();
     }
   };
 
   this.getElements = () => {
-    TurbolinksAnimate.elements = [];
+    TurboAnimate.elements = [];
 
     function getChildren(parent) {
-      let type = TurbolinksAnimate.options.type || TurbolinksAnimate.options.previousType || 'true';
-      if (parent.dataset.turbolinksAnimatePersist == type) {
+      let type = TurboAnimate.options.type || TurboAnimate.options.previousType || 'true';
+      if (parent.dataset.turboAnimatePersist == type) {
         return;
-      } else if (parent.dataset.turbolinksAnimatePersistItself == type || parent.querySelectorAll('[data-turbolinks-animate-persist]').length > 0 || parent.querySelectorAll('[data-turbolinks-animate-persist-itself]').length > 0) {
+      } else if (parent.dataset.turboAnimatePersistItself == type || parent.querySelectorAll('[data-turbo-animate-persist]').length > 0 || parent.querySelectorAll('[data-turbo-animate-persist-itself]').length > 0) {
         let children = parent.children;
         for (let i = 0; i < children.length; i++) {
           getChildren(children[i]);
         }
       } else {
-        TurbolinksAnimate.elements.push(parent);
+        TurboAnimate.elements.push(parent);
       }
     }
 
-    getChildren(TurbolinksAnimate.element);
+    getChildren(TurboAnimate.element);
   };
   this.useOptions = () => {
-    if (TurbolinksAnimate.elements != null) {
-      TurbolinksAnimate.elements.forEach((element) => {
-        element.style.animationDuration = TurbolinksAnimate.options.duration;
-        if (TurbolinksAnimate.options.delay != false)
-          element.style.animationDelay = TurbolinksAnimate.options.delay;
+    if (TurboAnimate.elements != null) {
+      TurboAnimate.elements.forEach((element) => {
+        element.style.animationDuration = TurboAnimate.options.duration;
+        if (TurboAnimate.options.delay != false)
+          element.style.animationDelay = TurboAnimate.options.delay;
       });
     }
   };
 
   this.reset = () => {
-    delete TurbolinksAnimate.options.appear;
-    delete TurbolinksAnimate.options.previousType;
-    TurbolinksAnimate.inline = false;
+    delete TurboAnimate.options.appear;
+    delete TurboAnimate.options.previousType;
+    TurboAnimate.inline = false;
   };
   this.resetClasses = () => {
-    if (TurbolinksAnimate.elements != null) {
-      TurbolinksAnimate.elements.forEach((element) => {
-        TurbolinksAnimate.animateClasses.forEach((animation) => element.classList.remove(animation));
+    if (TurboAnimate.elements != null) {
+      TurboAnimate.elements.forEach((element) => {
+        TurboAnimate.animateClasses.forEach((animation) => element.classList.remove(animation));
       });
     }
   };
 
   this.animate = () => {
-    let animation = TurbolinksAnimate.getAnimation();
+    let animation = TurboAnimate.getAnimation();
 
-    TurbolinksAnimate.element.addEventListener('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', (event) => {
+    TurboAnimate.element.addEventListener('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', (event) => {
       if (event.currentTarget.dataset.triggered)
         return;
       event.currentTarget.dataset.triggered = true;
 
-      dispatchEvent('turbolinks:animation-end', {detail: {element: TurbolinksAnimate.element, disappearing: TurbolinksAnimate.disappearing}});
+      dispatchEvent('turbo:animation-end', {detail: {element: TurboAnimate.element, disappearing: TurboAnimate.disappearing}});
     });
 
-    dispatchEvent('turbolinks:animation-start', {detail: {element: TurbolinksAnimate.element, disappearing: TurbolinksAnimate.disappearing, animation: animation}});
+    dispatchEvent('turbo:animation-start', {detail: {element: TurboAnimate.element, disappearing: TurboAnimate.disappearing, animation: animation}});
 
-    TurbolinksAnimate.elements.forEach((element) => {
+    TurboAnimate.elements.forEach((element) => {
       element.addEventListener('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', () => {
         if (event.currentTarget.dataset.triggered)
           return;
         event.currentTarget.dataset.triggered = true;
         setTimeout(() => {
-          if (TurbolinksAnimate.disappearing == false)
-            TurbolinksAnimate.resetClasses();
+          if (TurboAnimate.disappearing == false)
+            TurboAnimate.resetClasses();
         }, 250);
       });
-      TurbolinksAnimate.getClassListFor(animation).forEach((animation) => element.classList.add(animation));
+      TurboAnimate.getClassListFor(animation).forEach((animation) => element.classList.add(animation));
     });
   };
   this.getAnimation = () => {
     let animation;
 
-    if (!TurbolinksAnimate.disappearing)
-      animation = TurbolinksAnimate.options.appear;
-    if (TurbolinksAnimate.inline) {
-      animation = TurbolinksAnimate.options.animation;
-    } else if (typeof TurbolinksAnimate.element.dataset.turbolinksAnimateAnimation !== 'undefined') {
-      animation = TurbolinksAnimate.element.dataset.turbolinksAnimateAnimation;
+    if (!TurboAnimate.disappearing)
+      animation = TurboAnimate.options.appear;
+    if (TurboAnimate.inline) {
+      animation = TurboAnimate.options.animation;
+    } else if (typeof TurboAnimate.element.dataset.turboAnimateAnimation !== 'undefined') {
+      animation = TurboAnimate.element.dataset.turboAnimateAnimation;
     } else {
-      animation = TurbolinksAnimate.options.animation;
+      animation = TurboAnimate.options.animation;
     }
 
     return animation;
@@ -288,7 +288,7 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
       browserWidth = window.innerWidth,
       animation = null;
 
-    let breakpoints = TurbolinksAnimate.options.breakpoints.sort((a, b) => {
+    let breakpoints = TurboAnimate.options.breakpoints.sort((a, b) => {
       return b.width - a.width;
     });
     breakpoints.forEach((k, breakpoint) => {
@@ -298,11 +298,11 @@ window.TurbolinksAnimate = window.TurbolinksAnimate || new function() {
     if (animation == null)
       animation = animations;
 
-    animation = TurbolinksAnimate.animations.filter(object => object.name.toLowerCase() == animation.toLowerCase())[0];
-    if (TurbolinksAnimate.disappearing) {
+    animation = TurboAnimate.animations.filter(object => object.name.toLowerCase() == animation.toLowerCase())[0];
+    if (TurboAnimate.disappearing) {
       if (animation.disappear != true)
-        animation = TurbolinksAnimate.animations.filter(object => object.name.toLowerCase() == animation.disappear.toLowerCase())[0];
-      if (TurbolinksAnimate.options.reversedDisappearing && animation.reverse != null) {
+        animation = TurboAnimate.animations.filter(object => object.name.toLowerCase() == animation.disappear.toLowerCase())[0];
+      if (TurboAnimate.options.reversedDisappearing && animation.reverse != null) {
         classList.push(animation.reverse);
       } else {
         classList.push(animation.name);
@@ -332,3 +332,5 @@ function extend() {
 function cssPropertyToCamelCase(property) {
   return property.replace(/-([a-z])/gi, (s, group1) => group1.toUpperCase());
 }
+
+window.TurbolinksAnimate = window.TurboAnimate;
